@@ -6,13 +6,28 @@
   --light-bg: #24baef;
   --font-color: #fff;
 }
-
+ 
 body {
   background-color: var(--bg-color);
   font-family: var(--main-font);
-  color: var(--font-color); 
+  color: var(--font-color);
 }
-a{
+
+a {
   text-decoration: none;
   color: var(--font-color);
+}
+
+.my-input {
+  background-color: transparent;
+  border: 1px solid #a8a8a83d;
+  color: var(--font-color);
+}
+
+.my-input:focus {
+  background-color: transparent;
+  outline: #131722 !important;
+  color: var(--font-color);
+
+  ;
 }
