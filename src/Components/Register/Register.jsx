@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 import axios from 'axios'
 import { useNavigate } from 'react-router-dom'
 import Joi from 'joi'
-
+import { Link } from 'react-router-dom'
 
 export default function Register() {
   let navigate = useNavigate()
@@ -35,7 +35,7 @@ export default function Register() {
     setisLoading(true)
     e.preventDefault()
     let validation = validateUserData()
-    if (validation === undefined) {
+    if (validation.error === undefined) {
       setisLoading(false)
       sendUserDataToApi()
     } else {
@@ -43,8 +43,6 @@ export default function Register() {
       setErrorList(validation.error.details)
     }
   }
-
-
   function validateUserData() {
     let schema = Joi.object({
       name: Joi.string().min(3).max(30).required(),
@@ -53,13 +51,15 @@ export default function Register() {
       rePassword: Joi.string().valid(Joi.ref('password')).required().empty(),
       phone: Joi.string().min(11).max(11).required()
     })
+    
     setisLoading(false);
     console.log(schema.validate(user, { abortEarly: false }))
     return schema.validate(user, { abortEarly: false })
   }
   return (
     <>
-      < form onSubmit={submitUserData} >
+      <h1 className='text-center fw-bold py-2'>Create an account</h1>
+      < form className='w-50 mx-auto' onSubmit={submitUserData} >
         <label htmlFor="name">Name</label>
         <input onChange={getUserData} type="text" className='form-control my-input my-2' name='name' id='name' />
         {errorList.map((err, index) => {
@@ -108,7 +108,9 @@ export default function Register() {
             );
           }
         })}
+
         <button type='submit' className='btn btn-info'>{isLoading === true ? <i className='fas fa-spinner fa-spin'></i> : 'sign Up'}</button>
+        <p className='pt-2 text-secondary'>Already have an account? <Link className='link-underline-primary' to='/login'> Login</Link></p>
       </form >
     </>
   )
