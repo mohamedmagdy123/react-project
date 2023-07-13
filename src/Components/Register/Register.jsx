@@ -15,7 +15,7 @@ export default function Register() {
   })
   const [error, setError] = useState("")
   const [errorList, setErrorList] = useState([])
-  const [isLoading, setisLoading] = useState(false)
+  const [isLoading, setIsLoading] = useState(false)
 
 
   function getUserData(e) {
@@ -27,19 +27,19 @@ export default function Register() {
 
   async function sendUserDataToApi() {
     await axios.post("https://ecommerce.routemisr.com/api/v1/auth/signup", user);
-    setisLoading(false)
+    setIsLoading(false)
     navigate('/login')
   }
 
   function submitUserData(e) {
-    setisLoading(true)
+    setIsLoading(true)
     e.preventDefault()
     let validation = validateUserData()
     if (validation.error === undefined) {
-      setisLoading(false)
+      setIsLoading(false)
       sendUserDataToApi()
     } else {
-      setisLoading(false)
+      setIsLoading(false)
       setErrorList(validation.error.details)
     }
   }
@@ -52,7 +52,7 @@ export default function Register() {
       phone: Joi.string().min(11).max(11).required()
     })
     
-    setisLoading(false);
+    setIsLoading(false);
     console.log(schema.validate(user, { abortEarly: false }))
     return schema.validate(user, { abortEarly: false })
   }
