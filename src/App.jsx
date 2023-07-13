@@ -7,20 +7,22 @@ import Tv from "./Components/Tv/Tv";
 import People from "./Components/People/People";
 import Login from "./Components/Login/Login";
 import Register from "./Components/Register/Register";
+import jwtDecode from "jwt-decode";
+import { useState } from "react";
 
-let routers = createBrowserRouter([
-  {
-    path: "/", element: <Layout />, children: [
-      { path: 'home', element: <Home /> },
-      { path: 'movies', element: <Movies /> },
-      { path: 'tv', element: <Tv /> },
-      { path: 'people', element: <People /> },
-      { path: 'login', element: <Login /> },
-      { index: true, element: <Register /> }
-    ]
-  },
-]);
 function App() {
+  let routers = createBrowserRouter([
+    {
+      path: "/", element: <Layout />, children: [
+        { path: 'home', element: <Home /> },
+        { path: 'movies', element: <Movies /> },
+        { path: 'tv', element: <Tv /> },
+        { path: 'people', element: <People /> },
+        { path: 'login', element: <Login /> },
+        { index: true, element: <Register /> }
+      ]
+    },
+  ]);
   return (<>
     <RouterProvider router={routers} /></>);
 }

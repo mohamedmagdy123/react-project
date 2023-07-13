@@ -24,12 +24,17 @@ export default function Register() {
     setUser(myUser)
   }
 
-
   async function sendUserDataToApi() {
-    await axios.post("https://ecommerce.routemisr.com/api/v1/auth/signup", user);
-    setIsLoading(false)
-    navigate('/login')
+    try {
+      await axios.post("https://ecommerce.routemisr.com/api/v1/auth/signup", user)
+      setIsLoading(false)
+      navigate('/login')
+    } catch (error) {
+      console.log(error.response.data.message)
+      setError(error.response.data.message)
+    }
   }
+
 
   function submitUserData(e) {
     setIsLoading(true)
@@ -51,7 +56,7 @@ export default function Register() {
       rePassword: Joi.string().valid(Joi.ref('password')).required().empty(),
       phone: Joi.string().min(11).max(11).required()
     })
-    
+
     setIsLoading(false);
     console.log(schema.validate(user, { abortEarly: false }))
     return schema.validate(user, { abortEarly: false })
@@ -110,6 +115,11 @@ export default function Register() {
         })}
 
         <button type='submit' className='btn btn-info'>{isLoading === true ? <i className='fas fa-spinner fa-spin'></i> : 'sign Up'}</button>
+        {error && (
+          <p className="text-danger py-2" role="alert">
+            {error}
+          </p>
+        )}
         <p className='pt-2 text-secondary'>Already have an account? <Link className='link-underline-primary' to='/login'> Login</Link></p>
       </form >
     </>

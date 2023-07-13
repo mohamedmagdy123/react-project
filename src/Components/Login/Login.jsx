@@ -23,12 +23,12 @@ export default function Login() {
 
   async function sendUserDataToApi() {
     try {
-      await axios.post("https://ecommerce.routemisr.com/api/v1/auth/signin", user)
+      const response = await axios.post("https://ecommerce.routemisr.com/api/v1/auth/signin", user)
       setIsLoading(false)
+     localStorage.setItem('userToken', response.data.token)
       navigate('/home')
     } catch (error) {
       setError(error.response.data.message)
-      console.log(error.response.data.message);
     }
   }
 
